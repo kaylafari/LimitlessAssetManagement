@@ -1,16 +1,27 @@
-# React + Vite
+# Isaac Auto Brokers
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+An original React/Vite starter site for a luxury auto-broker business. It includes:
 
-Currently, two official plugins are available:
+- Home page with premium vehicle-broker positioning
+- Used inventory grid with placeholder vehicle data and stock imagery
+- Auto Broker / "why use us" page
+- Financing inquiry demo form (no data is submitted or stored)
+- About page with showroom hours: Monday–Friday, 9:00 AM–5:00 PM
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Run locally
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Then open `http://127.0.0.1:5173/`.
 
-## Expanding the Oxlint configuration
+## Build
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm run build
+npm run lint
+```
+
+Replace the placeholder inventory, copy, images, contact details, and financing handler in `src/App.jsx` when you are ready to make the site live.
