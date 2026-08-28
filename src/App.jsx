@@ -467,9 +467,33 @@ function Broker() {
 
 function Financing() {
   const [submitted, setSubmitted] = useState(false);
-  const submit = (event) => {
+  const [error, setError] = useState(false);
+  const submit = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
+    setError(false);
+
+    const form = event.currentTarget;
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/isaaclimitless@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        },
+      );
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    }
   };
   return (
     <>
@@ -504,13 +528,18 @@ function Financing() {
           </div>
         </aside>
         <form className="finance-form" onSubmit={submit}>
+          <input
+            name="_subject"
+            type="hidden"
+            value="New Limitless Asset Management finance application"
+          />
           {submitted ? (
             <div className="form-success">
               <CircleCheck size={40} />
               <h3>Your application is ready for review.</h3>
               <p>
-                This application is not transmitted or stored by the website.
-                Isaac will follow up with next steps.
+                Your application has been sent to Isaac. He will follow up with
+                next steps.
               </p>
               <button
                 className="button"
@@ -525,37 +554,38 @@ function Financing() {
               <div className="form-head">
                 <h2>Finance application</h2>
                 <p>
-                  Fields marked with * are required. Do not submit sensitive
-                  information until a secure application portal is connected.
+                  Fields marked with * are required. Please do not include
+                  sensitive information in this form.
                 </p>
               </div>
+              {error && (
+                <p className="form-error">
+                  We could not send your application. Please try again or call
+                  (310) 777-1026.
+                </p>
+              )}
               <div className="form-grid">
                 <Label label="First name *">
-                  <input required placeholder="Isaac" />
+                  <input required name="first_name" placeholder="Isaac" />
                 </Label>
                 <Label label="Last name *">
-                  <input required placeholder="Morgan" />
+                  <input required name="last_name" placeholder="Morgan" />
                 </Label>
                 <Label label="Email *">
-                  <input required type="email" placeholder="you@email.com" />
-                </Label>
-                <Label label="Phone">
-                  <input type="tel" placeholder="(555) 000-0000" />
-                </Label>
-                <Label label="Social Security number *">
                   <input
                     required
-                    type="password"
-                    inputMode="numeric"
-                    autoComplete="off"
-                    maxLength="11"
-                    pattern="[0-9]{3}-?[0-9]{2}-?[0-9]{4}"
-                    placeholder="000-00-0000"
+                    name="email"
+                    type="email"
+                    placeholder="you@email.com"
                   />
+                </Label>
+                <Label label="Phone">
+                  <input name="phone" type="tel" placeholder="(555) 000-0000" />
                 </Label>
                 <Label label="Home street address *" full>
                   <input
                     required
+                    name="home_address"
                     autoComplete="street-address"
                     placeholder="123 Main Street, Apt. 4"
                   />
@@ -563,6 +593,7 @@ function Financing() {
                 <Label label="City *">
                   <input
                     required
+                    name="city"
                     autoComplete="address-level2"
                     placeholder="Los Angeles"
                   />
@@ -570,6 +601,7 @@ function Financing() {
                 <Label label="State and ZIP code *">
                   <input
                     required
+                    name="state_and_zip"
                     autoComplete="postal-code"
                     placeholder="CA 90034"
                   />
@@ -577,21 +609,31 @@ function Financing() {
                 <Label label="Employer *">
                   <input
                     required
+                    name="employer"
                     autoComplete="organization"
                     placeholder="Company name"
                   />
                 </Label>
                 <Label label="Job title">
-                  <input placeholder="Your position" />
+                  <input name="job_title" placeholder="Your position" />
                 </Label>
                 <Label label="Time with employer *">
-                  <input required placeholder="e.g., 3 years, 6 months" />
+                  <input
+                    required
+                    name="time_with_employer"
+                    placeholder="e.g., 3 years, 6 months"
+                  />
                 </Label>
                 <Label label="Gross monthly income *">
-                  <input required inputMode="decimal" placeholder="$0.00" />
+                  <input
+                    required
+                    name="gross_monthly_income"
+                    inputMode="decimal"
+                    placeholder="$0.00"
+                  />
                 </Label>
                 <Label label="Vehicle of interest">
-                  <select defaultValue="">
+                  <select name="vehicle_of_interest" defaultValue="">
                     <option value="" disabled>
                       Select a vehicle
                     </option>
@@ -601,7 +643,7 @@ function Financing() {
                   </select>
                 </Label>
                 <Label label="Preferred contact">
-                  <select defaultValue="Email">
+                  <select name="preferred_contact" defaultValue="Email">
                     <option>Email</option>
                     <option>Phone</option>
                     <option>Text</option>
@@ -609,13 +651,14 @@ function Financing() {
                 </Label>
                 <Label label="Tell us what you have in mind" full>
                   <textarea
+                    name="additional_details"
                     rows="4"
                     placeholder="Vehicle, budget, trade-in details, or anything else you'd like us to know."
                   />
                 </Label>
               </div>
               <label className="consent">
-                <input required type="checkbox" />{" "}
+                <input required name="consent" type="checkbox" />{" "}
                 <span>
                   I confirm that the information is accurate and agree to be
                   contacted by Isaac Mizrahi about my financing request.
