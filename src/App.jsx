@@ -35,9 +35,9 @@ function Layout({ children }) {
 
   return <div className="site-shell">
     <header className="header">
-      <Link to="/" className="brand" aria-label="Isaac Auto Brokers home">
-        <span className="brand-mark">I</span>
-        <span><strong>ISAAC</strong><em>AUTO BROKERS</em></span>
+      <Link to="/" className="brand" aria-label="Limitless Asset Management home">
+        <span className="brand-mark">L</span>
+        <span><strong>LIMITLESS</strong><em>ASSET MANAGEMENT</em></span>
       </Link>
       <nav className="desktop-nav" aria-label="Primary navigation">
         {navItems.map(([label, to]) => <NavLink key={to} to={to} end={to === '/'}>{label}</NavLink>)}
@@ -56,10 +56,10 @@ function Layout({ children }) {
       <button className="button light" onClick={requestDrive}>Schedule a consultation <ArrowRight size={17} /></button>
     </section>
     <footer className="footer">
-      <div className="footer-brand"><span className="brand-mark">I</span><div><strong>ISAAC AUTO BROKERS</strong><p>Thoughtful guidance for your next vehicle.</p></div></div>
+      <div className="footer-brand"><span className="brand-mark">L</span><div><strong>LIMITLESS ASSET MANAGEMENT</strong><p>Thoughtful guidance for your next vehicle.</p></div></div>
       <div><span className="footer-label">VISIT</span><p>By appointment<br />Brooklyn, New York</p></div>
       <div><span className="footer-label">HOURS</span><p>Monday–Friday<br />9:00 AM–5:00 PM</p></div>
-      <div><span className="footer-label">CONTACT</span><a href="tel:5550138422">(555) 013-8422</a><a href="mailto:hello@isaacautobrokers.com">hello@isaacautobrokers.com</a></div>
+      <div><span className="footer-label">CONTACT</span><a href="tel:5550138422">(555) 013-8422</a><a href="mailto:hello@limitlessassetmanagement.com">hello@limitlessassetmanagement.com</a></div>
     </footer>
     {message && <div className="toast"><CircleCheck size={18} />{message}</div>}
   </div>
@@ -81,10 +81,10 @@ function CarCard({ car }) {
 function Home() {
   return <>
     <section className="home-hero">
-      <div className="hero-copy"><span className="eyebrow">A BETTER WAY TO BUY</span><h1>Drive something<br /><i>exceptional.</i></h1><p>Isaac Auto Brokers makes the search for your next vehicle clear, personal, and refreshingly uncomplicated.</p><div className="hero-buttons"><Link className="button" to="/inventory">View available inventory <ArrowRight size={17} /></Link><Link className="button ghost" to="/broker">How our brokerage works</Link></div></div>
+      <div className="hero-copy"><span className="eyebrow">A BETTER WAY TO BUY</span><h1>Drive something<br /><i>exceptional.</i></h1><p>Limitless Asset Management makes the search for your next vehicle clear, personal, and refreshingly uncomplicated.</p><div className="hero-buttons"><Link className="button" to="/inventory">View available inventory <ArrowRight size={17} /></Link><Link className="button ghost" to="/broker">How our brokerage works</Link></div></div>
       <div className="hero-visual"><img src={image('photo-1492144534655-ae79c964c9d7')} alt="Luxury coupe in a desert landscape" /><div className="hero-detail"><Sparkles size={18} /><span><strong>Curated, not crowded</strong>Hand-selected premium vehicles</span></div></div>
     </section>
-    <section className="intro-section"><span className="eyebrow">THE ISAAC DIFFERENCE</span><div className="split-heading"><h2>A broker who works<br />for <i>you.</i></h2><p>We pair considered vehicle sourcing with simple, honest guidance. From first conversation to final handoff, every detail is shaped around your needs—not a showroom quota.</p></div>
+    <section className="intro-section"><span className="eyebrow">THE LIMITLESS DIFFERENCE</span><div className="split-heading"><h2>A broker who works<br />for <i>you.</i></h2><p>We pair considered vehicle sourcing with simple, honest guidance. From first conversation to final handoff, every detail is shaped around your needs—not a showroom quota.</p></div>
       <div className="value-grid"><Value icon={<Search />} title="Curated sourcing" text="Tell us the car, color, mileage, and must-haves. We do the careful searching." /><Value icon={<ShieldCheck />} title="Clear confidence" text="Every vehicle receives a thoughtful review before it earns a place in our collection." /><Value icon={<CalendarCheck />} title="Easy ownership" text="Financing, trade-ins, and delivery are coordinated around your schedule." /></div>
     </section>
     <section className="featured"><div className="section-head"><div><span className="eyebrow">FEATURED INVENTORY</span><h2>In the driver's seat.</h2></div><Link className="text-link" to="/inventory">See all inventory <ArrowRight size={16} /></Link></div><div className="car-grid">{cars.slice(0, 3).map(car => <CarCard key={car.name} car={car} />)}</div></section>
@@ -115,10 +115,10 @@ function Financing() {
 
 function Label({ label, children, full = false }) { return <label className={full ? 'field full' : 'field'}><span>{label}</span>{children}</label> }
 
-function About() { return <><PageHero eyebrow="ABOUT ISAAC" title="Cars, considered differently." copy="A small team with a large respect for your time, your taste, and the road ahead." imageUrl={image('photo-1449965408869-eaa3f722e40d')} />
-  <section className="about-story"><div><span className="eyebrow">OUR POINT OF VIEW</span><h2>Good service is never<br /><i>an afterthought.</i></h2></div><div><p>Isaac Auto Brokers is a placeholder brand built around a simple idea: buying the right vehicle should feel as good as driving it. We believe thoughtful questions, honest context, and a little extra care make all the difference.</p><p>Our clients come to us for premium vehicles, but they stay for a process that feels clear and personal. We hope this starter site gives you a flexible foundation to make that story your own.</p></div></section>
+function About() { return <><PageHero eyebrow="ABOUT LIMITLESS" title="Cars, considered differently." copy="A small team with a large respect for your time, your taste, and the road ahead." imageUrl={image('photo-1449965408869-eaa3f722e40d')} />
+  <section className="about-story"><div><span className="eyebrow">OUR POINT OF VIEW</span><h2>Good service is never<br /><i>an afterthought.</i></h2></div><div><p>Limitless Asset Management is built around a simple idea: buying the right vehicle should feel as good as driving it. We believe thoughtful questions, honest context, and a little extra care make all the difference.</p><p>Our clients come to us for premium vehicles, but they stay for a process that feels clear and personal. We hope this starter site gives you a flexible foundation to make that story your own.</p></div></section>
   <section className="about-image"><img src={image('photo-1486496572940-2bb2341af4fa')} alt="Auto broker speaking with a client" /><div><span className="eyebrow">SHOWROOM HOURS</span><h2>Come say hello.</h2><p><strong>Monday–Friday</strong><br />9:00 AM–5:00 PM</p><p>Visits are welcome by appointment so we can give every conversation the time it deserves.</p><a className="button" href="tel:5550138422">Call (555) 013-8422 <Phone size={16} /></a></div></section></> }
 
-function App() { return <BrowserRouter><Layout><Routes><Route path="/" element={<Home />} /><Route path="/inventory" element={<Inventory />} /><Route path="/broker" element={<Broker />} /><Route path="/financing" element={<Financing />} /><Route path="/about" element={<About />} /></Routes></Layout></BrowserRouter> }
+function App() { return <BrowserRouter basename={import.meta.env.BASE_URL}><Layout><Routes><Route path="/" element={<Home />} /><Route path="/inventory" element={<Inventory />} /><Route path="/broker" element={<Broker />} /><Route path="/financing" element={<Financing />} /><Route path="/about" element={<About />} /></Routes></Layout></BrowserRouter> }
 
 export default App
