@@ -1,77 +1,11 @@
 import { useState } from "react";
-import {
-  BrowserRouter,
-  Link,
-  NavLink,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
-import {
-  ArrowRight,
-  BadgeCheck,
-  CalendarCheck,
-  CarFront,
-  ChevronRight,
-  CircleCheck,
-  Clock3,
-  Menu,
-  Phone,
-  Search,
-  ShieldCheck,
-  SlidersHorizontal,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { BrowserRouter, Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { ArrowRight, BadgeCheck, CalendarCheck, CarFront, ChevronLeft, ChevronRight, CircleCheck, Clock3, Menu, Phone, Search, ShieldCheck, SlidersHorizontal, Sparkles, X } from "lucide-react";
 import "./App.css";
+import { cars } from "./inventory";
 
 const image = (id, width = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=85`;
-
-const cars = [
-  {
-    name: "2022 Porsche Taycan 4S",
-    type: "Electric Performance",
-    price: "$78,900",
-    miles: "14,892 mi",
-    image: image("photo-1614162692292-7ac56d7f7f1e"),
-  },
-  {
-    name: "2023 Range Rover Sport",
-    type: "Luxury SUV",
-    price: "$96,500",
-    miles: "8,145 mi",
-    image: image("photo-1606664515524-ed2f786a0bd6"),
-  },
-  {
-    name: "2021 Mercedes-Benz S 580",
-    type: "Executive Sedan",
-    price: "$72,400",
-    miles: "22,048 mi",
-    image: image("photo-1618843479313-40f8afb4b4d8"),
-  },
-  {
-    name: "2022 BMW M4 Competition",
-    type: "Performance Coupe",
-    price: "$69,800",
-    miles: "18,260 mi",
-    image: image("photo-1555215695-3004980ad54e"),
-  },
-  {
-    name: "2023 Lexus GX 460",
-    type: "Premium SUV",
-    price: "$58,600",
-    miles: "16,509 mi",
-    image: image("photo-1553440569-bcc63803a83d"),
-  },
-  {
-    name: "2022 Audi RS 5 Sportback",
-    type: "Sport Sedan",
-    price: "$64,900",
-    miles: "19,772 mi",
-    image: image("photo-1503376780353-7e6692767b70"),
-  },
-];
 
 const navItems = [
   ["Home", "/"],
@@ -205,23 +139,20 @@ function PageHero({ eyebrow, title, copy, imageUrl }) {
 }
 
 function CarCard({ car }) {
+  const [activeImage, setActiveImage] = useState(0);
+  const move = (direction) => setActiveImage((current) => (current + direction + car.images.length) % car.images.length);
   return (
     <article className="car-card">
       <div className="car-image">
-        <img src={car.image} alt={car.name} />
+        <img src={car.images[activeImage]} alt={`${car.name}, photo ${activeImage + 1} of ${car.images.length}`} loading="lazy" />
         <span>AVAILABLE</span>
-      </div>
-      <div className="car-info">
-        <p>{car.type}</p>
-        <h3>{car.name}</h3>
-        <div>
-          <strong>{car.price}</strong>
-          <span>{car.miles}</span>
+        <div className="gallery-controls">
+          <button type="button" aria-label={`Previous photo of ${car.name}`} onClick={() => move(-1)}><ChevronLeft size={18} /></button>
+          <small>{activeImage + 1} / {car.images.length}</small>
+          <button type="button" aria-label={`Next photo of ${car.name}`} onClick={() => move(1)}><ChevronRight size={18} /></button>
         </div>
-        <Link to="/financing" className="text-link">
-          Explore options <ArrowRight size={16} />
-        </Link>
       </div>
+      <div className="car-info"><p>{car.body}</p><h3>{car.name}</h3><div><strong>Call for price</strong><span>{car.miles}</span></div><small className="vin">VIN {car.vin}</small><Link to="/financing" className="text-link">Explore options <ArrowRight size={16} /></Link></div>
     </article>
   );
 }
@@ -351,43 +282,9 @@ function Value({ icon, title, text }) {
 
 function Inventory() {
   const [filter, setFilter] = useState("All vehicles");
-  return (
-    <>
-      <PageHero
-        eyebrow="PRE-OWNED, REIMAGINED"
-        title="Find your next favorite."
-        copy="A rotating selection of late-model luxury, performance, and everyday-exceptional vehicles."
-        imageUrl={image("photo-1504215680853-026ed2a45def")}
-      />
-      <section className="inventory-section">
-        <div className="filter-row">
-          <div className="filter-label">
-            <SlidersHorizontal size={18} />
-            Filter inventory
-          </div>
-          {["All vehicles", "SUVs", "Sedans", "Performance", "Electric"].map(
-            (item) => (
-              <button
-                key={item}
-                onClick={() => setFilter(item)}
-                className={filter === item ? "filter active" : "filter"}
-              >
-                {item}
-              </button>
-            ),
-          )}
-        </div>
-        <p className="results-copy">
-          Showing {cars.length} thoughtfully selected vehicles
-        </p>
-        <div className="car-grid inventory-grid">
-          {cars.map((car) => (
-            <CarCard key={car.name} car={car} />
-          ))}
-        </div>
-      </section>
-    </>
-  );
+  const filters = ["All vehicles", "SUVs", "Sedans", "Performance", "Electric", "Trucks"];
+  const visibleCars = filter === "All vehicles" ? cars : cars.filter((car) => car.category === filter.slice(0, -1) || car.category === filter);
+  return <><PageHero eyebrow="PRE-OWNED, REIMAGINED" title="Find your next favorite." copy="A rotating selection of late-model luxury, performance, and everyday-exceptional vehicles." imageUrl={image("photo-1504215680853-026ed2a45def")} /><section className="inventory-section"><div className="filter-row"><div className="filter-label"><SlidersHorizontal size={18} />Filter inventory</div>{filters.map((item) => <button key={item} onClick={() => setFilter(item)} className={filter === item ? "filter active" : "filter"}>{item}</button>)}</div><p className="results-copy">Showing {visibleCars.length} thoughtfully selected vehicles</p><div className="car-grid inventory-grid">{visibleCars.map((car) => <CarCard key={car.vin} car={car} />)}</div></section></>;
 }
 
 function Broker() {
